@@ -294,4 +294,3 @@ void i2c_eeprom_ack_polling(ubyte ctl)
         write_done = i2c_write(ctl);
     }
 }
-

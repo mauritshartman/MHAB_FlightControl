@@ -22,4 +22,3 @@ void flight_control(void);
 #endif
 
 #endif	/* FLIGHT_H */
-

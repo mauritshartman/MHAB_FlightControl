@@ -67,4 +67,3 @@ static void init_ports(void)
     TRISEbits.TRISE1 = OUTPUT;  // GSM_PWR_PIN
     TRISEbits.TRISE2 = INPUT;
 }
-

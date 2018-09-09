@@ -54,4 +54,3 @@ void    putch(ubyte c);
 #endif
 
 #endif	/* SERIAL_H */
-

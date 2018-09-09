@@ -50,6 +50,3 @@ ubyte   OW_detect_slave(void);
 #endif
 
 #endif	/* 1WIRE_H */
-
-
-

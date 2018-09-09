@@ -24,5 +24,3 @@ void delay_1sec(void);
 #endif
 
 #endif	/* UTIL_H */
-
-

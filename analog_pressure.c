@@ -57,4 +57,3 @@ void close_analog_pressure(void)
 {
     CloseADC();
 }
-

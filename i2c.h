@@ -57,4 +57,3 @@ void    i2c_eeprom_ack_polling(ubyte ctl);
 #endif
 
 #endif	/* I2C_H */
-

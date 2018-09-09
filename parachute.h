@@ -25,4 +25,3 @@ void deploy_parachute(void);
 #endif
 
 #endif	/* PARACHUTE_H */
-

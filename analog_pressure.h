@@ -27,4 +27,3 @@ void close_analog_pressure(void);
 #endif
 
 #endif	/* ANALOG_PRESSURE_H */
-

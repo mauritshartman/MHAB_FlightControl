@@ -37,4 +37,3 @@ ubyte retr_record(uint16 num, record *rec);
 #endif
 
 #endif	/* STORAGE_H */
-

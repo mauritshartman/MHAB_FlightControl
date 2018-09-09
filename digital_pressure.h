@@ -39,4 +39,3 @@ ubyte   read_bmp180_coefficients(bmp180_coeff *coeff);
 #endif
 
 #endif	/* DIGITAL_PRESSURE_H */
-

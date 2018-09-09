@@ -210,4 +210,3 @@ uint24 read_bmp180_pressure(void)
 
     return (uint24)tp;
 }
-

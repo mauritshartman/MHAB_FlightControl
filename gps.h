@@ -42,5 +42,3 @@ void print_position(gps_pos *pos);
 #endif
 
 #endif	/* GPS_H */
-
-

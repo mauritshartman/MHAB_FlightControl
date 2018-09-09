@@ -21,4 +21,3 @@ void init(void);
 #endif
 
 #endif	/* INIT_H */
-

@@ -101,4 +101,3 @@ typedef unsigned long       uint32; // [0 - 4294967295]
 #endif
 
 #endif	/* DEFS_H */
-

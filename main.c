@@ -56,4 +56,3 @@ void main(void) {
     // Somehow a Sleep instruction reset the WDT and doubles the time (30 sec for flight routine, 33 sec WDT again)
     while (TRUE) { Nop(); }
 }
-

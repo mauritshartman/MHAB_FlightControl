@@ -27,4 +27,3 @@ sint16  get_external_temp(void);
 #endif
 
 #endif	/* TEMPERATURE_H */
-

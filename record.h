@@ -100,4 +100,3 @@ void print_record(record *rec);
 #endif
 
 #endif	/* RECORD_H */
-

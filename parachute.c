@@ -30,4 +30,3 @@ void deploy_parachute(void)
     // Make sure it gets saved in the EEPROM:
     save_record(0, &global_config);
 }
-

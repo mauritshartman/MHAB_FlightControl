@@ -30,4 +30,3 @@ void    send_record(record *);
 #endif
 
 #endif	/* RADIO_H */
-
