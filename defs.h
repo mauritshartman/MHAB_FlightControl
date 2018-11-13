@@ -54,7 +54,7 @@ typedef unsigned long       uint32; // [0 - 4294967295]
 #define MODE_ASC_MAIN       (ubyte)3   /* Probe is ascending */
 #define MODE_ASC_MAIN2      (ubyte)4   /* Probe is ascending */
 #define MODE_ASC_TIMEOUT    (ubyte)5   /* Probe is still ascending but timeout (6 hrs) reached */
-/*#define MODE_ASC_DRIFT      (ubyte)6   /* Probe barely ascending for some time, but main timeout not yet reached */
+/*#define MODE_ASC_DRIFT      (ubyte)6    Probe barely ascending for some time, but main timeout not yet reached */
 #define MODE_DESC_BURST     (ubyte)7   /* Probe descending because of burst balloon, pyro not activated */
 #define MODE_DESC_PYRO      (ubyte)8   /* Probe descending, pyro activated to jettison balloon */
 #define MODE_DESC_GSM       (ubyte)9   /* Probe descending below 2km so GSM will be enabled */

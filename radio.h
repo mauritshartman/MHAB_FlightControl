@@ -23,6 +23,7 @@ void    disable_radio(void);
 void    rtty_send(ubyte *msg, ubyte invert);
 void    rtty_tone(ubyte high);
 void    send_record(record *);
+//void    send_record_ukhas(record *, uint16 );
 
 
 #ifdef	__cplusplus

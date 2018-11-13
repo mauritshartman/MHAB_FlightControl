@@ -53,7 +53,7 @@ void print_record(record *rec)
         if (i == 4) { putch('.'); }     // Put a dot after the first two minute decimals
         putch(rec->ru.telemetry.latitude[i]);
     }
-    if (rec->ru.telemetry.status2.lat_hemi == 1) { printf(" N"); }
+    if (rec->ru.telemetry.status2.north_hemi == 1) { printf(" N"); }
     else { printf(" S"); }
     printf("\", \"lon\": \"");
 
@@ -62,8 +62,8 @@ void print_record(record *rec)
         if (i == 5) { putch('.'); }     // Put a dot after the first two minute decimals
         putch(rec->ru.telemetry.longitude[i]);
     }
-    if (rec->ru.telemetry.status2.lon_hemi == 1) { printf(" W"); }
-    else { printf(" E"); }
+    if (rec->ru.telemetry.status2.east_hemi == 1) { printf(" E"); }
+    else { printf(" W"); }
     printf("\" },\r\n");
 
     pf24bfix = (sint32)rec->ru.telemetry.alt_gps;   // Printf routine does not handle 24 bit types well

@@ -461,8 +461,8 @@ static void position_measurements(record *curr_rec, record *prev_rec)
     get_position(&pos);
 
     // 2. Set hemisphere (N vs S and E vs W) information:
-    curr_rec->ru.telemetry.status2.lat_hemi = (pos.lat_hemi[0] == 'N') ? 1: 0;
-    curr_rec->ru.telemetry.status2.lon_hemi = (pos.lon_hemi[0] == 'W') ? 1: 0;
+    curr_rec->ru.telemetry.status2.north_hemi = (pos.lat_hemi[0] == 'N') ? 1: 0;
+    curr_rec->ru.telemetry.status2.east_hemi = (pos.lon_hemi[0] == 'E') ? 1: 0;
 
     // 3. Check for GPS fix:
     if (pos.pos_fix[0] == '1') {

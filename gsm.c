@@ -135,7 +135,7 @@ void send_sms_record(record *rec)
     lat[7] = rec->ru.telemetry.latitude[5];
     lat[8] = rec->ru.telemetry.latitude[6];
     lat[9] = rec->ru.telemetry.latitude[7];
-    lat[10] = (rec->ru.telemetry.status2.lat_hemi == 1) ? 'N': 'S';
+    lat[10] = (rec->ru.telemetry.status2.north_hemi == 1) ? 'N': 'S';
     
     lon[0] = rec->ru.telemetry.longitude[0];
     lon[1] = rec->ru.telemetry.longitude[1];
@@ -148,7 +148,7 @@ void send_sms_record(record *rec)
     lon[8] = rec->ru.telemetry.longitude[6];
     lon[9] = rec->ru.telemetry.longitude[7];
     lon[10] = rec->ru.telemetry.longitude[8];
-    lon[11] = (rec->ru.telemetry.status2.lon_hemi == 1) ? 'W': 'E';
+    lon[11] = (rec->ru.telemetry.status2.east_hemi == 1) ? 'E': 'W';
     
     pf24bfix = (sint32)rec->ru.telemetry.alt_gps;
     printf("MHAB%u %u%u %ldm http://maps.google.com/maps?q=%s,%s %dTi %dTe", \

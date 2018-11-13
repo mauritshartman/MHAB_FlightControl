@@ -52,15 +52,15 @@ struct {
     union {
     struct {
     ubyte       baro_digi: 1;       // 88       1 if digital pressure, 0 if analog pressure
-    ubyte       lat_hemi: 1;        // 89       1 if North, 0 if South
-    ubyte       lon_hemi: 1;        // 90       1 if West, 0 if East
+    ubyte       north_hemi: 1;      // 89       1 if North, 0 if South
+    ubyte       east_hemi: 1;       // 90       1 if East, 0 if West
     ubyte       padding: 5;         // 91 - 95  Padding bytes (zero default)
     };
     ubyte       status2_byte;
     } status2;
 
-    ubyte       latitude[8];        // 96 -159  ddmm.mmmm format
-    ubyte       longitude[9];       // 160-231  dddmm.mmmm format
+    ubyte       latitude[8];        // 96 -159  ddmm.mmmm format (excluding dot)
+    ubyte       longitude[9];       // 160-231  dddmm.mmmm format (excluding dot)
     sint24      alt_gps;            // 232-255  GPS altitude (in meters)
 } telemetry;
 
