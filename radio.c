@@ -8,7 +8,6 @@
  */
 
 #include "radio.h"
-#include "crc16.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -56,10 +55,12 @@ void disable_radio(void)
 
 void rtty_send(ubyte *msg, ubyte invert)
 {
-    uint16 i;
+    uint16 i, len_msg;
     
     ClrWdt();                   // Prevent reset during transmission
-    for (i = 0; msg[i] != 0;i++) {
+    
+    len_msg = strlen(msg);
+    for (i = 0; i < len_msg; i++) {
         rtty_send_byte(msg[i], invert);
     }
 }
@@ -68,7 +69,6 @@ void rtty_send(ubyte *msg, ubyte invert)
 static void rtty_send_byte(ubyte b, ubyte invert)
 {
     ubyte i;
-    ubyte val;
     
     if (invert) {
         RADIO_TX_PIN = HIGH;            // Start bit - send space
@@ -82,8 +82,8 @@ static void rtty_send_byte(ubyte b, ubyte invert)
         
         RADIO_TX_PIN = LOW;            // Stop bit - send mark
         __delay_ms(20);
-    }
-    else {
+    
+    } else {
         RADIO_TX_PIN = LOW;             // Start bit - send space
         __delay_ms(20);
         
@@ -107,8 +107,7 @@ void rtty_tone(ubyte high)
 {
     if (high) {
         RADIO_TX_PIN = HIGH;
-    }
-    else {
+    } else {
         RADIO_TX_PIN = LOW;
     }
 }
@@ -281,15 +280,13 @@ void send_record(record *rec)
 
 static uint16 crc16_checksum(ubyte *string)
 {
-	size_t i;
-	uint16 crc;
+	uint16 i, crc;
 	ubyte c;
  
 	crc = 0xffff;
  
 	// Calculate checksum ignoring the first two $s
-	for (i = 2; i < strlen(string); i++)
-	{
+	for (i = 2; i < strlen(string); i++) {
 		c = string[i];
 		crc = _crc_xmodem_update(crc, c);
 	}

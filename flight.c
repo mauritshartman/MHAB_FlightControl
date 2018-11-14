@@ -154,10 +154,9 @@ static void handle_state_asc_main(record *curr_rec)
 #define RECS_HIST 10
 static void handle_state_asc_main2(record *curr_rec)
 {
-    // WARN: 32 + 13 * 3 + 2 + 1 + 2 = 70 bytes of stack memory (or even 80 in debug)
+    // WARN: 32 + 11 * 3 + 2 + 1 + 2 = 70 bytes of stack memory (or even 80 in debug)
     record rec;
     sint24 alts[RECS_HIST + 1];
-    sint24 min, max;
     sint16 h_diff;
     ubyte i;
     uint16 lr = global_config.ru.config.last_record;
@@ -186,7 +185,7 @@ static void handle_state_asc_main2(record *curr_rec)
     }
     alts[RECS_HIST] = curr_rec->ru.telemetry.alt_gps;
 #ifdef DEBUG_ON
-    pf24bfix = (sint32)alts[10];
+    pf24bfix = (sint32)alts[RECS_HIST];
     printf("%ld\r\n", pf24bfix);
 #endif
     
@@ -215,19 +214,6 @@ static void handle_state_asc_main2(record *curr_rec)
         set_mode(MODE_ASC_TIMEOUT);
         return;       
     }
-    
-    /*
-    // Read the last 10 records and see if we are drifting (less than 20m altitude difference in last 10 records):
-    min = SHRTLONG_MAX; max = SHRTLONG_MIN;
-    for (i = 0; i < RECS_HIST + 1; i++) {  // Determine lowest and highest altitude in last records:
-        if (alts[i] < min) { min = alts[i]; }
-        if (alts[i] > max) { max = alts[i]; }
-    }
-    if (max - min < 20) {
-        set_mode(MODE_ASC_DRIFT);
-        return;
-    }
-    */
         
     // Default: we stay in ASC_MAIN2
 }
