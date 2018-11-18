@@ -17,7 +17,6 @@
       <itemPath>i2c.h</itemPath>
       <itemPath>storage.h</itemPath>
       <itemPath>gps.h</itemPath>
-      <itemPath>analog_pressure.h</itemPath>
       <itemPath>digital_pressure.h</itemPath>
       <itemPath>parachute.h</itemPath>
       <itemPath>flight.h</itemPath>
@@ -42,7 +41,6 @@
       <itemPath>i2c.c</itemPath>
       <itemPath>storage.c</itemPath>
       <itemPath>gps.c</itemPath>
-      <itemPath>analog_pressure.c</itemPath>
       <itemPath>digital_pressure.c</itemPath>
       <itemPath>parachute.c</itemPath>
       <itemPath>flight.c</itemPath>
@@ -130,8 +128,8 @@
         <property key="code-model-rom" value=""/>
         <property key="create-html-files" value="false"/>
         <property key="data-model-ram" value=""/>
-        <property key="data-model-size-of-double" value="32"/>
-        <property key="data-model-size-of-float" value="32"/>
+        <property key="data-model-size-of-double" value="24"/>
+        <property key="data-model-size-of-float" value="24"/>
         <property key="display-class-usage" value="false"/>
         <property key="display-hex-usage" value="false"/>
         <property key="display-overall-usage" value="true"/>

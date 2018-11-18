@@ -22,7 +22,7 @@ extern ubyte global_gps_buf[NMEA_BUF_SIZE];
 
 
 typedef struct {
-    ubyte time[10];         // hhmmss.ss format
+    ubyte time[12];         // hhmmss.ssss format
     ubyte latitude[10];     // ddmm.mmmm format (including dot and leading zeroes)
     ubyte lat_hemi[2];      // N or S
     ubyte longitude[11];    // dddmm.mmmm format (including dot and leading zeroes)

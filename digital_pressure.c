@@ -31,7 +31,7 @@ ubyte init_bmp180_pressure(void)
         printf("\r\nError initializing digital barometer\r\n");
         return FALSE;
     }
-    printf("DIGI_BARO ");
+    printf("BARO ");
     return TRUE;
 }
 

@@ -1,3 +1,4 @@
+
 /*
  * File:   serial.h
  * Author: Maurits
@@ -52,7 +53,7 @@ void serial_channel(ubyte channel)
         case SELECT_GPS:
             COM_SEL0_PIN = LOW;
             COM_SEL1_PIN = LOW;
-            open_uart(BAUD4800, FALSE);
+            open_uart(BAUD9600, FALSE);
             break;
         case SELECT_GSM:
             COM_SEL0_PIN = HIGH;

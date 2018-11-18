@@ -43,7 +43,8 @@ void enable_radio(ubyte invert)
     else {
         RADIO_TX_PIN = HIGH;    // Transmit mark
     }
-    __delay_ms(30);              // NTX2 manual indicates at least 5ms startup time for full TX power
+    __delay_ms(20);              // NTX2 manual indicates at least 5ms startup time for full TX power
+    __delay_ms(20);
 }
 
 
@@ -185,7 +186,7 @@ void send_record(record *rec)
 }*/
 
 // Based on https://ukhas.org.uk/communication:protocol
-#define RADIO_BUF_UKHAS 90
+#define RADIO_BUF_UKHAS 100
 void send_record(record *rec)
 {
     ubyte out[RADIO_BUF_UKHAS];
@@ -195,14 +196,17 @@ void send_record(record *rec)
     sint16 temp_in, temp_ex;
     uint24 temp;
     sint32 pf24bfix;
+    uint32 pf24bfixu;
 
+    enable_radio(global_config.ru.config.radio_invert);
+    
     // Callsign and sentence_id, using CALLSIGN with SSID based on http://www.aprs.org/aprs11/SSIDs.txt
     memset(out, '\0', RADIO_BUF_UKHAS);
-    sprintf(out, "$$PD8MAH-11,%u,", global_config.ru.config.last_record);
+    sprintf(out, "$$$$PD8MAH-11,%u,", global_config.ru.config.last_record);
     
     // Time
     memset(buf, '\0', sizeof(buf));
-    sprintf(buf, "%u:%u:%u,", rec->ru.telemetry.hours, rec->ru.telemetry.minutes, rec->ru.telemetry.seconds);
+    sprintf(buf, "%02u:%02u:%02u,", rec->ru.telemetry.hours, rec->ru.telemetry.minutes, rec->ru.telemetry.seconds);
     strcat(out, buf);
     
     // Latitude
@@ -220,6 +224,7 @@ void send_record(record *rec)
     buf[i++] = rec->ru.telemetry.latitude[5]; // m
     buf[i++] = rec->ru.telemetry.latitude[6]; // m
     buf[i++] = rec->ru.telemetry.latitude[7]; // m
+    buf[i++] = ',';
     strcat(out, buf);
     
     // Longitude
@@ -238,6 +243,7 @@ void send_record(record *rec)
     buf[i++] = rec->ru.telemetry.longitude[6]; // m
     buf[i++] = rec->ru.telemetry.longitude[7]; // m
     buf[i++] = rec->ru.telemetry.longitude[8]; // m
+    buf[i++] = ',';
     strcat(out, buf);
     
     // Altitude
@@ -255,9 +261,9 @@ void send_record(record *rec)
     strcat(out, buf);
     
     // Pressure
-    pf24bfix = (sint32)rec->ru.telemetry.pressure;
+    pf24bfixu = (uint32)rec->ru.telemetry.pressure;
     memset(buf, '\0', sizeof(buf));
-    sprintf(buf, "%d,", pf24bfix);
+    sprintf(buf, "%lu,", pf24bfixu);
     strcat(out, buf);
     
     // Mode and status:
@@ -267,12 +273,11 @@ void send_record(record *rec)
     
     // Checksum:
     memset(buf, '\0', sizeof(buf));
-    sprintf(buf, "*%04X\n", crc16_checksum(out));
+    sprintf(buf, "*%04X\n\r\n", crc16_checksum(out));
     strcat(out, buf);
     printf(out);
     
     // Send message and disable radio:
-    enable_radio(global_config.ru.config.radio_invert);
     rtty_send(out, global_config.ru.config.radio_invert);
     disable_radio();
 }
@@ -285,8 +290,8 @@ static uint16 crc16_checksum(ubyte *string)
  
 	crc = 0xffff;
  
-	// Calculate checksum ignoring the first two $s
-	for (i = 2; i < strlen(string); i++) {
+	// Calculate checksum ignoring the first four $s
+	for (i = 4; i < strlen(string); i++) {
 		c = string[i];
 		crc = _crc_xmodem_update(crc, c);
 	}

@@ -17,7 +17,6 @@
 #include "storage.h"
 #include "radio.h"
 #include "temperature.h"
-#include "analog_pressure.h"
 #include "digital_pressure.h"
 #include "util.h"
 
@@ -419,17 +418,6 @@ static void sensor_measurements(record *curr_rec)
     // 2. Get BMP180 pressure:
     curr_rec->ru.telemetry.status2.baro_digi = 1;
     curr_rec->ru.telemetry.pressure = read_bmp180_pressure();
-    /*
-    // 2. Get pressure (alternating between digital (uneven) and analog pressure (even records)):
-    if (global_config.ru.config.last_record % 2 == 0) {
-        curr_rec->ru.telemetry.status2.baro_digi = 1;
-        curr_rec->ru.telemetry.pressure = read_bmp180_pressure();
-    }
-    else {
-        curr_rec->ru.telemetry.status2.baro_digi = 0;
-        curr_rec->ru.telemetry.pressure = read_analog_pressure();
-    }
-    */
 }
 
 

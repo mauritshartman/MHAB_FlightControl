@@ -15,6 +15,7 @@
 
 static void retr_gpgga_sentence(ubyte *buf, uint16 bufsize);
 static ubyte parse_gpgga(gps_pos *pos);
+static uint16 next_token(ubyte *, sint16, ubyte *, uint16);
 
 
 ubyte global_gps_buf[NMEA_BUF_SIZE];
@@ -30,6 +31,7 @@ ubyte get_position(gps_pos *pos)
     serial_channel(SELECT_PC);
 
     // 2. Parse it:
+    //printf("buffer: %s\n", global_gps_buf);
     return parse_gpgga(pos);
 }
 
@@ -105,27 +107,54 @@ static void retr_gpgga_sentence(ubyte *buf, uint16 bufsize)
  */
 static ubyte parse_gpgga(gps_pos *pos)
 {
-    char *tok;
-    static ubyte tmp_gps_buf[NMEA_BUF_SIZE];
+    sint16 index = 0;
+    ubyte tok[8];
 
     // Make copy of the buffer since it will be modified by the strtok function:
-    memset(pos,         '\0', sizeof(pos));
-    memset(tmp_gps_buf, '\0', sizeof(tmp_gps_buf));
-    strncpy(tmp_gps_buf, global_gps_buf, sizeof(tmp_gps_buf));
+    memset(tok,         '\0', sizeof(tok));
+    memset(pos,         '\0', sizeof(gps_pos));
 
     // First token must be $GPGGA:
-    tok = strtok(tmp_gps_buf, ",");
+    index = next_token(global_gps_buf, index, tok, sizeof(tok));
     if (strcmp(tok, "$GPGGA")) { return FALSE; }
 
-    // Parse GPS info:
-    strncpy(pos->time,       strtok(NULL, ","), sizeof(pos->time));
-    strncpy(pos->latitude,   strtok(NULL, ","), sizeof(pos->latitude));
-    strncpy(pos->lat_hemi,   strtok(NULL, ","), sizeof(pos->lat_hemi));
-    strncpy(pos->longitude,  strtok(NULL, ","), sizeof(pos->longitude));
-    strncpy(pos->lon_hemi,   strtok(NULL, ","), sizeof(pos->lon_hemi));
-    strncpy(pos->pos_fix,    strtok(NULL, ","), sizeof(pos->pos_fix));
-    strncpy(pos->satellites, strtok(NULL, ","), sizeof(pos->satellites));
-    strncpy(pos->dilution,   strtok(NULL, ","), sizeof(pos->dilution));
-    strncpy(pos->altitude,   strtok(NULL, ","), sizeof(pos->altitude));
+    // Parse GPS info: $GPGGA,time,lat,N/S,lon,W/E,fix,satellites,dilution,altitude,M,sep,M,age,id*CS
+    index = next_token(global_gps_buf, index, pos->time, sizeof(pos->time));
+    index = next_token(global_gps_buf, index, pos->latitude, sizeof(pos->latitude));
+    index = next_token(global_gps_buf, index, pos->lat_hemi, sizeof(pos->lat_hemi));
+    index = next_token(global_gps_buf, index, pos->longitude, sizeof(pos->longitude));
+    index = next_token(global_gps_buf, index, pos->lon_hemi, sizeof(pos->lon_hemi));
+    index = next_token(global_gps_buf, index, pos->pos_fix, sizeof(pos->pos_fix));
+    index = next_token(global_gps_buf, index, pos->satellites, sizeof(pos->satellites));
+    index = next_token(global_gps_buf, index, pos->dilution, sizeof(pos->dilution));
+    index = next_token(global_gps_buf, index, pos->altitude, sizeof(pos->altitude));
+
     return TRUE;
+}
+
+/* Tokenize the given buffer from index onwards and copy the token into the given
+ output buffer, taking care not to exceed its size. Return the index from whence
+ the next call can be made. */
+static uint16 next_token(ubyte *buf, sint16 index, ubyte *dest, uint16 dest_size)
+{
+    ubyte c;
+    ubyte out_i = 0;
+    
+    if (index < 0) { return index; }
+    
+    dest_size--; // ensure null-termination
+    
+    c = buf[index++];
+    while (c != ',') {
+        if (c == '\0') { return -1; }
+        
+        if (out_i < dest_size) { // make the copy if output buf size allows
+            dest[out_i++] = c;
+        }
+        
+        c = buf[index++];
+    }
+    
+    dest[out_i] = '\0';
+    return index;
 }

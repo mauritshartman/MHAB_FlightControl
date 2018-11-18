@@ -14,7 +14,6 @@
 #include "util.h"
 
 #include "storage.h"
-#include "analog_pressure.h"
 #include "digital_pressure.h"
 #include "temperature.h"
 #include "gsm.h"
@@ -45,7 +44,7 @@ const ubyte *global_help_string = \
 "n    Display a particular record.\r\n" \
 "N    Wipe the complete EEPROM.\r\n" \
 "p    Display analog and digital pressures.\r\n" \
-"P    Retrieve BMP180 coefficients and set ASDX015 calibration.\r\n" \
+"P    Retrieve BMP180 coefficients.\r\n" \
 "q    Display position and GPS status.\r\n" \
 "s    Put the microcontroller to sleep.\r\n" \
 "t    Display temperature information.\r\n" \
@@ -123,7 +122,7 @@ void command_loop(void)
             case 'N':
                 cmd_storage(); break;
             case 'p':
-                printf("Analog: %lu Pa, digital: %lu Pa\r\n", (uint32)read_analog_pressure(), (uint32)read_bmp180_pressure());
+                printf("Digital: %lu Pa\r\n", (uint32)read_bmp180_pressure());
                 break;
             case 'P':
                 cmd_pressure(); break;
@@ -223,10 +222,6 @@ static void cmd_phone_number(void)
 static void cmd_pressure(void)
 {
     bmp180_coeff coeff;
-    ubyte c;
-    sint16 tmp;
-    ubyte buf[APC_BUF_SIZE];
-    memset(buf, '\0', sizeof(buf));
 
     // 1. Print out the BMP085 coefficients:
     read_bmp180_coefficients(&coeff);
@@ -242,23 +237,6 @@ static void cmd_pressure(void)
     printf("MB:  %d\r\n", coeff.mb);
     printf("MC:  %d\r\n", coeff.mc);
     printf("MD:  %d\r\n", coeff.md);
-
-    // 2. Prompt user to change the calibration factor:
-    printf("Current analog calibration factor is: %d\r\nChange it (y or n): ", global_config.ru.config.apc);
-    while (!data_rdy_uart()) { Nop(); }
-    c = getc_uart();
-    printf("%c\r\n", c);
-
-    // 3. If so, set the new ASDX015A24R calibration factor:
-    if (c == 'y') {
-        printf("Type new factor (max 7 chars): ");
-        alt_gets(buf, sizeof(buf) - 1);    // We allow the user only to enter 7 chars (ensure null-termination)
-        tmp = atoi(buf);
-        printf("\r\nStoring new calibration factor: %d...", tmp);
-        global_config.ru.config.apc = tmp;
-        save_record(0, &global_config);
-        printf("OK\r\n");
-    }
 }
 
 /**

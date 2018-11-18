@@ -37,13 +37,12 @@ void init(void)
 
     // Initialize serial communication & make sure COM SEL0 and COM SEL1 are pulled up:
     init_serial();
-    printf("\r\nDaedalus Flight Controller  -  Version 1.0 (c) 2017, MA Hartman\r\n");
+    printf("\r\nDaedalus Flight Controller  -  Version 1.0 (c) 2018, MA Hartman\r\n");
     init_i2c();
 
     // Initialize sensors:
     if (!init_gsm()) { return; }
     if (!init_radio()) { return; }
-    if (!init_analog_pressure()) { return; }
     if (!init_bmp180_pressure()) { return; }
     if (!init_temperature()) { return; }
 
