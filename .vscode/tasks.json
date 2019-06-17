@@ -1,0 +1,19 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "arm-none-eabi-g++ build active file",
+            "command": "/home/maurits/.arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/arm-none-eabi-g++",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "/home/maurits/.arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin"
+            }
+        }
+    ],
+    "version": "2.0.0"
+}

@@ -1,4 +1,5 @@
-
+build/
+ipch/
 
 # MPLabX gitignore:
 *.d

@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceRoot}",
+                "/home/maurits/.arduino15/packages/adafruit/hardware/samd/1.5.1/**",
+                "/home/maurits/.arduino15/packages/arduino/hardware/samd/1.8.1/**",
+                "/home/maurits/.arduino15/packages/arduino/tools/CMSIS-Atmel/1.2.0/CMSIS/Device/ATMEL",
+                "/home/maurits/.arduino15/packages/arduino/tools/**"
+            ],
+            "forcedInclude": [
+                "/home/maurits/.arduino15/packages/adafruit/hardware/samd/1.5.1/cores/arduino/Arduino.h"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false,
+                "path": [
+                  "${workspaceRoot}"
+                ]
+            },
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/home/maurits/.arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/arm-none-eabi-g++",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
